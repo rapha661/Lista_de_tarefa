@@ -28,6 +28,9 @@ void filtrar_estado(lista_tarefa *lt);
 void filtrar_categoria(lista_tarefa *lt);
 
 void filtrar_prioridade_e_categoria(lista_tarefa *lt);
+void alterar_tarefa(lista_tarefa *lt);
+
+void clear_buffer();
 
 void exibe_menu(int *opcao);
 

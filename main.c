@@ -39,6 +39,9 @@ int main() {
   else if(opcao == 7){
     printf("\n");
     filtrar_prioridade_e_categoria(&lt);
+  else if (opcao == 4) {
+    printf("\n");
+    alterar_tarefa(&lt);
   }
   } while(opcao != 0);
 
