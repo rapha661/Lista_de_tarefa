@@ -1,7 +1,14 @@
 #include <stdio.h>
 #include "lib.h"
 
-void cadastra_tarefa(lista_tarefa  *lt) {
+
+  void clear_buffer() {
+  int x;
+  while ((x = getchar()) != '\n' && x != EOF) {
+  }
+  }
+  
+  void cadastra_tarefa(lista_tarefa  *lt) {
   char descricao[300];
   char categoria[100];
   int prioridade;
@@ -19,7 +26,7 @@ void cadastra_tarefa(lista_tarefa  *lt) {
   
   printf("Por fim, digite a priorirade da tarefa: ");
   scanf("%d", &prioridade);
-  printf("\nPrioridade cadastrada com sucesso.\n");
+printf("\nPrioridade cadastrada com sucesso.\n");
   tarefa.prioridade = prioridade; // atribui à variável prioridade dentro do struct tarefa o inteiro digitado pelo usuário
   
   lt->tarefa[lt->qtnd] = tarefa; // adiciona o struct tarefa preenchido com os dados na variável tarefa[100] do struct lista_tarefa
@@ -66,6 +73,167 @@ void exibe_menu(int *opcao) {
   printf("0. Sair\n");
   printf("Opção: ");
   scanf("%d", opcao);
+}
+
+
+void filtrar_por_prioridade(lista_tarefa *lt, int prioridade) {
+  for (int x = 0; x < lt->qtnd; x++) {
+    if (lt->tarefa[x].prioridade == prioridade) {
+      printf("Tarefa %d\n", x);
+      printf("\tDescrição: %s\n", lt->tarefa[x].descricao);
+      printf("\tCategoria: %s\n", lt->tarefa[x].categoria);
+      printf("\tPrioridade: %d\n", lt->tarefa[x].prioridade);
+      printf("\tEstado: %s\n\n", lt->tarefa[x].estado);
+    }
+  }
+}
+
+void filtro_prioridade(lista_tarefa *lt) {
+
+  int prioridade;
+  int cont = 0;
+  printf("Digite a prioridade desejada: ");
+  scanf("%d", &prioridade);
+
+  for (int x = 0; x < lt->qtnd; x++) {
+    // Loop que passa por todas as tarefas. Se a prioridade existir aparece, se não, aparece uma mensagem mostrando que não existe.
+    if (lt->tarefa[x].prioridade == prioridade) {
+      printf("Tarefa %d\n", x);
+      printf("\tDescrição: %s\n", lt->tarefa[x].descricao);
+      printf("\tCategoria: %s\n", lt->tarefa[x].categoria);
+      printf("\tPrioridade: %d\n", lt->tarefa[x].prioridade);
+      printf("\tEstado: %s\n\n", lt->tarefa[x].estado);
+      cont += 1;
+    }
+  }
+  if (cont == 0) {
+    printf("\tNão há tarefas com a prioridade %d.\n\n", prioridade);
+  }
+}
+
+void filtrar_estado(
+    lista_tarefa *lt) { // filtra pelo estado da tarefa: Completo, em andamento ou nao iniciada
+  char estado[15];
+  printf("\n");
+  printf(
+      "Escolha o estado (completo|em andamento|nao iniciado): "); // O usuario escolhe qual vai ser a prioridade que deseja ver
+  scanf(" %[^\n]", estado);
+  clear_buffer();
+  int verificar = 0;
+
+  for (int x = 0; x < lt->qtnd; x++) {
+    if (strcmp(lt->tarefa[x].estado, estado) == 0) {
+      // logica de comparação para ver o estado que as tarefas estão
+      printf("\nEstado: %s\n", lt->tarefa[x].estado);
+      printf("Descricao: %s\n", lt->tarefa[x].descricao);
+      printf("Categoria: %s\n", lt->tarefa[x].categoria);
+      printf("Prioridade: %d\n", lt->tarefa[x].prioridade);
+      printf("\n");
+
+      verificar = 1;
+    }
+  }
+  if (!verificar) {
+    printf("\nNão existe tarefa com esse estado.\n\n");
+  }
+}
+
+
+void filtrar_categoria(
+    lista_tarefa *lt) { // Filtrar pelo tipo de categoria e listar por ordem de
+                        // prioridade (do mais importante para o menos).
+  char categoria[50];
+  char categorias_impressas[100][50];
+  int num_categorias_impressas = 0;
+
+  printf("Categorias disponiveis: ");
+  // função de printar as categorias existentes para pessoa conseguir escolher
+  for (int x = 0; x < lt->qtnd; x++) {
+    int categoria_repetida = 0;
+    for (int y = 0; y < num_categorias_impressas; y++) {
+      if (strcmp(lt->tarefa[x].categoria, categoria) == 0) {
+        categoria_repetida = 1;
+        break;
+      }
+    }
+
+    if (!categoria_repetida) {
+      printf("%s, ", lt->tarefa[x].categoria);
+      strcpy(categorias_impressas[num_categorias_impressas],
+             lt->tarefa[x].categoria);
+      num_categorias_impressas++;
+    }
+  }
+
+  printf("\nEscolha a categoria: "); // O usuario vai poder escolher qual vai ser a categoria escolhida para o filtro
+  scanf(" %[^\n]", categoria);
+  printf("\n");
+  clear_buffer();
+  tarefa tarefas_filtro[100];
+  int contar = 0;
+
+  for (int x = 0; x < lt->qtnd; x++) {
+    if (strcmp(lt->tarefa[x].categoria, categoria) == 0) {
+      tarefas_filtro[contar] = lt->tarefa[x];
+      contar++;
+    }
+  }
+
+  qsort(tarefas_filtro, contar, sizeof(tarefa),
+        compara_tarefas); // Função de ordenar do maior numero para o menor pela <stdlib.h>
+  exibe_array(tarefas_filtro,contar); // Exibi a tarefa ordenado da forma pedida pelo usuário
+}
+
+
+void filtrar_prioridade_e_categoria(lista_tarefa *lt) { // filtrar por categoria e prioridade. Se não existir tarefa que tenha a categoria e prioridade aparece mensagem falando que n existe
+  char categoria[50];
+  int prioridade;
+
+  printf("Categorias disponiveis: ");
+
+  char categorias_impressas[100][50];
+  int num_categorias_impressas = 0;
+
+  // função de printar as categorias existentes
+  for (int x = 0; x < lt->qtnd; x++) {
+    int categoria_repetida = 0;
+    for (int y = 0; y < num_categorias_impressas; y++) {
+      if (strcmp(lt->tarefa[x].categoria, categorias_impressas[y]) == 0) {
+        categoria_repetida = 1;
+        break;
+      }
+    }
+
+    if (!categoria_repetida) {
+      printf("%s, ", lt->tarefa[x].categoria);
+      strcpy(categorias_impressas[num_categorias_impressas],lt->tarefa[x].categoria);
+      num_categorias_impressas++;
+    }
+  }
+
+  printf("\nEscolha a categoria: ");
+  scanf(" %[^\n]", categoria);
+
+  printf("Escolha a prioridade (0 a 10): ");
+  clear_buffer();
+  scanf("%d", &prioridade);
+  printf("\n");
+  int verificar = 0;
+
+  for (int x = 0; x < lt->qtnd; x++) {
+    if (lt->tarefa[x].prioridade == prioridade && strcmp(lt->tarefa[x].categoria, categoria) == 0) { // logica de comparação da prioridade e categoria para mostrar ao usuário
+      printf("Categoria: %s\n", lt->tarefa[x].categoria);
+      printf("Prioridade: %d\n", lt->tarefa[x].prioridade);
+      printf("Descricao: %s\n", lt->tarefa[x].descricao);
+      printf("Estado: %s\n", lt->tarefa[x].estado);
+      printf("\n");
+
+      verificar = 1;
+    }
+  }
+  if (!verificar) {
+    printf("Não existe essa tarefa\n");
+  }
 }
 
 int le_arquivo(lista_tarefa *lt) {
