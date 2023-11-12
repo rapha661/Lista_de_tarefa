@@ -1,6 +1,13 @@
 #include <stdio.h>
 #include "lib.h"
 
+
+void clear_buffer() {
+  int x;
+  while ((x = getchar()) != '\n' && x != EOF) {
+  }
+}
+
 void cadastra_tarefa(lista_tarefa  *lt) {
   char descricao[300];
   char categoria[100];
@@ -63,6 +70,56 @@ void exibe_menu(int *opcao) {
   printf("Opção: ");
   scanf("%d", opcao);
 }
+
+
+void alterar_tarefa(lista_tarefa *lt) {
+  int tarefa;
+  int opcao;
+  char alteracao[301];
+
+  listar_tarefa(lt); // mostra todas as tarefas para pessoa conseguir escolher e saber qual tarefa ela quer alterar
+  printf("\n");
+  printf("Digite o número da tarefa que deseja alterar: "); // escolha de qual tarefa ela quer mudar
+  scanf("%d", &tarefa);
+  printf("\n");
+  printf("Tarefa: %d\n", tarefa);
+  printf("Descrição: %s\n", lt->tarefa[tarefa].descricao);
+  printf("Categoria: %s\n", lt->tarefa[tarefa].categoria);
+  printf("Prioridade: %d\n", lt->tarefa[tarefa].prioridade);
+  printf("Estado: %s\n", lt->tarefa[tarefa].estado);
+  // mostra as informações da tarefa escolhida
+
+  printf("Escolha o campo que deseja alterar: \n");
+  printf("1. Descrição\n");
+  printf("2. Categoria\n");
+  printf("3. Prioridade\n");
+  printf("4. Estado\n");
+
+  printf("Opção: ");
+  scanf("%d", &opcao); // escolha do campo que ela quer alterar para começar o if para ver qual opção a pessoa escolheu
+  if (opcao == 1) {
+    printf("Digite a nova descrição: ");
+    clear_buffer();
+    scanf("%[^\n]", alteracao);
+    strcpy(lt->tarefa[tarefa].descricao,
+           alteracao); // função para substiruir a informação dada pelo usuário
+  } else if (opcao == 2) {
+    printf("Digite a nova categoria: ");
+    scanf("%[^\n]", alteracao);
+    strcpy(lt->tarefa[tarefa].categoria, alteracao);
+  } else if (opcao == 3) {
+    printf("Digite a nova prioridade: ");
+    scanf("%d", &opcao);
+    lt->tarefa[tarefa].prioridade = opcao;
+  } else if (opcao == 4) {
+    printf("Digite a novo estado (completo|em andamento|nao iniciado): ");
+    clear_buffer();
+    scanf("%[^\n]", alteracao);
+    strcpy(lt->tarefa[tarefa].estado, alteracao);
+  }
+  printf("Tarefa alterada com sucesso!\n\n");
+}
+
 
 int le_arquivo(lista_tarefa *lt) {
 
