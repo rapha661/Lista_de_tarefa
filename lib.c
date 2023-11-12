@@ -59,6 +59,10 @@ void exibe_menu(int *opcao) {
   printf("1. Criar tarefa\n");
   printf("2. Deletar tarefa\n");
   printf("3. Listar tarefa\n");
+  printf("4. Filtrar por prioridade\n");
+  printf("5. Filtrar por estado\n");
+  printf("6. Filtrar por Categoria\n");
+  printf("7. Filtrar por Prioridade e Categoria\n");
   printf("0. Sair\n");
   printf("Opção: ");
   scanf("%d", opcao);
