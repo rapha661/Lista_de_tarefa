@@ -24,6 +24,10 @@ int main() {
     printf("\n");
     listar_tarefa(&lt);
   }
+  else if (opcao == 4) {
+    printf("\n");
+    alterar_tarefa(&lt);
+  }
   } while(opcao != 0);
 
   escreve_arquivo(&lt); // Adiciona as mudanças no arquivo
