@@ -24,6 +24,22 @@ int main() {
     printf("\n");
     listar_tarefa(&lt);
   }
+    else if(opcao == 4){
+    printf("\n");
+    filtro_prioridade(&lt);
+  }
+  else if(opcao == 5){
+    printf("\n");
+    filtrar_estado(&lt);
+  }
+  else if(opcao == 6{
+    printf("\n");
+    filtrar_categoria(&lt);
+  }
+  else if(opcao == 7){
+    printf("\n");
+    filtrar_prioridade_e_categoria(&lt);
+  }
   } while(opcao != 0);
 
   escreve_arquivo(&lt); // Adiciona as mudanças no arquivo
