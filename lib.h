@@ -19,6 +19,16 @@ void listar_tarefa(lista_tarefa *lt);
 
 void deleta_tarefa(lista_tarefa *lt, int tarefa);
 
+void clear_buffer();
+
+void filtro_prioridade(lista_tarefa *lt);
+
+void filtrar_estado(lista_tarefa *lt);
+
+void filtrar_categoria(lista_tarefa *lt);
+
+void filtrar_prioridade_e_categoria(lista_tarefa *lt);
+
 void exibe_menu(int *opcao);
 
 int le_arquivo(lista_tarefa  *lt);
