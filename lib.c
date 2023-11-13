@@ -456,7 +456,6 @@ int exportar_prioridade_arquivo(lista_tarefa *lt) { // Exportar para o arquivo o
     printf("Tarefas exportadas com sucesso para o arquivo 'orgazinados.txt'.\n");
 }
 
-
 int exporta_categoria_arquivo(lista_tarefa *lt){
     char categoria[50];
     char categorias_impressas[100][50];

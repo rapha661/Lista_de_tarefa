@@ -52,7 +52,6 @@ int main() {
     printf("\n");
     exporta_categoria_arquivo(&lt);
   }
-
   else if(opcao == 11){
     printf("\n");
     exportar_prioridade_e_categoria(&lt);
