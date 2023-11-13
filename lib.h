@@ -5,6 +5,8 @@ typedef struct {
 
   char categoria[101];
 
+  char estado[21];
+
   int prioridade;
 } tarefa; // criação do struct tarefa com a descricao, categoria e prioridade
 
