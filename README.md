@@ -1,4 +1,4 @@
-<h1 align="center">Lista de tarefa 📄</h1>
+<h1>Lista de tarefa 📄</h1>
 
 **Objetivo:** Este projeto visa explorar e testar todos os conhecimentos que foram desenvolvidos ao longo do semestre e utilizar e praticar a utilização do github visando o futuro profissional. <br>
 
@@ -10,7 +10,7 @@
 
 **Tecnologia utilzada:** O programa foi escrito em C. <br>
 
-<h1 align="center">Desenvolvedor:</h1> <br>
+<h1>Desenvolvedor:</h1> <br>
 
 <table style="display:flex;" align="center">
     <td align="center">
