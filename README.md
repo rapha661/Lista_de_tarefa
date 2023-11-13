@@ -1,4 +1,4 @@
-<h1 align="center">Banco QuemPoupaTem 1.0</h1>
+<h1 align="center">To do list 📄</h1>
 
 **Objetivo:** Este projeto visa explorar e testar todos os conhecimentos que foram desenvolvidos ao longo do semestre e utilizar e praticar a utilização do github visando o futuro profissional. <br>
 
