@@ -497,3 +497,69 @@ int exporta_categoria_arquivo(lista_tarefa *lt){
     qsort(tarefas_filtro, contar, sizeof(tarefa), compara_tarefas);
     exibe_exportados(tarefas_filtro, contar); 
 }
+
+
+int exportar_prioridade_e_categoria(lista_tarefa *lt){ // exportar informações para o arquivo organizados.txt
+    char categoria[50];
+    int prioridade;
+
+    printf("Categorias disponiveis: ");
+
+    char categorias_impressas[100][50];
+    int num_impressas = 0;
+
+    
+  //função de printar as categorias existentes
+  for (int x = 0; x < lt->qtnd; x++) {
+      int categoria_repetida = 0;
+      for (int y = 0; y < num_impressas; y++) {
+          if (strcmp(lt->tarefa[x].categoria, categorias_impressas[y]) == 0) {
+              categoria_repetida = 1;
+              break;
+          }
+      }
+
+      if (!categoria_repetida) {
+          printf("%s, ", lt->tarefa[x].categoria);
+          strcpy(categorias_impressas[num_impressas], lt->tarefa[x].categoria);
+          num_impressas++;
+      }
+  }
+
+    printf("\nEscolha a categoria: ");
+    scanf(" %[^\n]", categoria);
+
+    printf("Escolha a prioridade (0 a 10): ");
+    scanf("%d", &prioridade);
+
+    FILE *arquivo;
+    arquivo = fopen("organizados.txt", "w"); // Abre o arquivo para escrita (cria um novo arquivo se não existir)
+
+    if (arquivo == NULL) {
+        printf("Não foi possível abrir o arquivo para escrita.\n");
+        return 1; // Retorna um código de erro
+    }
+
+    int verificar = 0;
+
+    for (int x = 0; x < lt->qtnd; x++) {
+        if (lt->tarefa[x].prioridade == prioridade && strcmp(lt->tarefa[x].categoria, categoria) == 0) { // logica de ver se a categoria e a prioridade são existem em alguma tarefa
+            fprintf(arquivo, "Prioridade: %d\n", lt->tarefa[x].prioridade);
+            fprintf(arquivo, "Categoria: %s\n", lt->tarefa[x].categoria);
+            fprintf(arquivo, "Estado: %s\n", lt->tarefa[x].estado);
+            fprintf(arquivo, "Descricao: %s\n", lt->tarefa[x].descricao);
+            fprintf(arquivo, "\n");
+
+            verificar = 1;
+        }
+    }
+
+    fclose(arquivo); // Fecha o arquivo
+
+    if (!verificar) {
+        printf("Não existe essa tarefa.\n");
+        return 1; // Retorna um código de erro
+    }
+
+    printf("Tarefas exportadas com sucesso para o arquivo 'organizados.txt'.\n");
+}
