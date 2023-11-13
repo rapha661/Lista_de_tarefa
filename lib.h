@@ -41,3 +41,5 @@ int le_arquivo(lista_tarefa  *lt);
 int escreve_arquivo(lista_tarefa *lt);
 
 int exportar_prioridade_arquivo(lista_tarefa *lt);
+
+int exporta_categoria_arquivo(lista_tarefa *lt);
