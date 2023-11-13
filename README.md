@@ -12,4 +12,4 @@
 
 <h1>Desenvolvedor:</h1> <br>
 
-<h3>Raphael Garavati Erbert RA: 221230147</h3>
+<p font-family: bold>Raphael Garavati Erbert</p>
