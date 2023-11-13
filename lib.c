@@ -455,3 +455,45 @@ int exportar_prioridade_arquivo(lista_tarefa *lt) { // Exportar para o arquivo o
 
     printf("Tarefas exportadas com sucesso para o arquivo 'orgazinados.txt'.\n");
 }
+
+int exporta_categoria_arquivo(lista_tarefa *lt){
+    char categoria[50];
+    char categorias_impressas[100][50];
+    int num_categorias_impressas = 0;
+
+    printf("Categorias disponiveis: ");
+
+    //função de printar as categorias existentes
+    for (int x = 0; x < lt->qtnd; x++) {
+        int categoria_repetida = 0;
+        for (int y = 0; y < num_categorias_impressas; y++) {
+            if (strcmp(lt->tarefa[x].categoria, categorias_impressas[y]) == 0) {
+                categoria_repetida = 1;
+                break;
+            }
+        }
+
+        if (!categoria_repetida) {
+            printf("%s, ", lt->tarefa[x].categoria);
+            strcpy(categorias_impressas[num_categorias_impressas], lt->tarefa[x].categoria);
+            num_categorias_impressas++;
+        }
+    }
+
+    printf("\nEscolha a categoria: ");//O usuario vai poder escolher qual vai ser a prioridade que deseja ver
+    scanf(" %[^\n]", categoria);
+    clear_buffer();
+
+    tarefa tarefas_filtro[100];
+    int contar = 0;
+
+    for(int x = 0; x < lt->qtnd; x++){
+        if(strcmp(lt->tarefa[x].categoria, categoria) == 0){
+            tarefas_filtro[contar] = lt->tarefa[x];
+            contar++;
+        }    
+    }
+
+    qsort(tarefas_filtro, contar, sizeof(tarefa), compara_tarefas);
+    exibe_exportados(tarefas_filtro, contar); 
+}
