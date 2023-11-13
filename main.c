@@ -47,6 +47,11 @@ int main() {
     printf("\n");
     exportar_prioridade_arquivo(&lt);
   }
+
+  else if(opcao == 10){
+    printf("\n");
+    exporta_categoria_arquivo(&lt);
+  }
   } while(opcao != 0);
 
   escreve_arquivo(&lt); // Adiciona as mudanças no arquivo
